@@ -3,6 +3,7 @@ package service
 import (
 	"github.com/dhevve/uploadImage/internal/models"
 	"github.com/dhevve/uploadImage/internal/repository"
+	"github.com/gin-gonic/gin"
 )
 
 type Authorization interface {
@@ -12,7 +13,7 @@ type Authorization interface {
 }
 
 type UploadImage interface {
-	Upload(userId int, fullFileName string) (int, error)
+	Upload(c *gin.Context, userId int) (int, error)
 	GetAll(userId int) ([]models.Image, error)
 	GetById(userId, imageId int) (models.Image, error)
 	Delete(userId, itemId int) error
