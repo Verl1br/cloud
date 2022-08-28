@@ -3,6 +3,7 @@ package handler
 import (
 	"fmt"
 	"net/http"
+	"path/filepath"
 	"strconv"
 
 	"github.com/dhevve/uploadImage/internal/models"
@@ -78,4 +79,34 @@ func (h *Handler) deleteImage(c *gin.Context) {
 	h.services.UploadImage.Delete(userId, id)
 
 	c.JSON(http.StatusOK, "ok")
+}
+
+const img_dir = "./image/default/"
+
+func (h *Handler) download(c *gin.Context) {
+	userId, err := getUserId(c)
+	if err != nil {
+		return
+	}
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return
+	}
+
+	image, err := h.services.UploadImage.GetById(userId, id)
+	if err != nil {
+		return
+	}
+
+	fileName := image.Name
+
+	targetPath := filepath.Join(img_dir, fileName)
+
+	c.Header("Content-Description", "File Transfer")
+	c.Header("Content-Transfer-Encoding", "binary")
+	c.Header("Content-Disposition", "attachment; filename="+fileName)
+	c.Header("Content-Type", "application/octet-stream")
+
+	c.File(targetPath)
 }

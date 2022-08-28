@@ -20,12 +20,12 @@ func saveFile(c *gin.Context) (string, error) {
 		if len(productId) == 0 {
 			productId = "default"
 		}
-		err := os.MkdirAll(fmt.Sprintf("%s/product/%s", IMAGE_DIR, productId), os.ModePerm)
+		err := os.MkdirAll(fmt.Sprintf("%s/%s", IMAGE_DIR, productId), os.ModePerm)
 		if err != nil {
 			return "", err
 		}
 	}
-	path := fmt.Sprintf("%s/product/%s", IMAGE_DIR, productId)
+	path := fmt.Sprintf("%s/%s", IMAGE_DIR, productId)
 
 	form, _ := c.MultipartForm()
 	var fileName string

@@ -38,7 +38,7 @@ func (s *UploadService) Delete(userId, itemId int) error {
 	if err != nil {
 		return err
 	}
-	path := "./image/product/default"
+	path := "./image/default"
 	os.Remove(fmt.Sprintf("%s/%s", path, image.Name))
 
 	return s.repo.Delete(userId, itemId)

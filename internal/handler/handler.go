@@ -29,6 +29,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		upload.POST("/upload_image", h.uploadImage)
 		upload.GET("/", h.getAll)
 		upload.GET("/:id", h.getById)
+		upload.GET("/download/:id", h.download)
 		upload.DELETE("/:id", h.deleteImage)
 	}
 
